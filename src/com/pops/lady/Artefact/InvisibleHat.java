@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by lady.pops on 08.12.2015.
  */
 public class InvisibleHat implements Artefact, Serializable{
-    private final Integer addCost = 15;
+    private final Integer addCost = 5;
     private final Integer needLevel = 4;
 
     public InvisibleHat() {

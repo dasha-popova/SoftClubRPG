@@ -23,9 +23,8 @@ public class Game implements Serializable{
     public void play(Integer level){
 
         for(int i = level; i <= 11; ++i){
-
-            if(!currentRoom.battle() || !currentRoom.isEndBattle()){
-
+            endGame = currentRoom.battle();
+            if(!endGame){
                 System.out.println("Так и останется чахнуть твоя Василиса у Змея-то-Горыныча..." +
                         "Подвел ты деву свою, богатырь. \nПобедил тебя " + currentRoom.getBigBoss().getName() +
                         "\n\nИгра окончена. Вы проиграли.");
@@ -36,19 +35,21 @@ public class Game implements Serializable{
                 hero.addArtefact(currentRoom.getArtefact());
             currentRoom = new Room(hero);
         }
-        if(!endGame){
-            if(currentRoom.isEndBattle()) {
-                endGame = true;
-                System.out.println("И добрался ты," + " , да победил Змея-Горыныча свирепого." +
+        if(endGame){
+            System.out.println("И добрался ты," + " , да победил Змея-Горыныча свирепого." +
                         "\nИ освободил ты свою Василису Прекрасную. И стали вы жить-поживать да детишек рожать=)" +
                         "\nКонец!" +
                         "\n\nИгра окончена. Вы победили.");
-            }
+
         }
     }
 
     public boolean isEndGame() {
         return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
     }
 
     public Room getCurrentRoom() {

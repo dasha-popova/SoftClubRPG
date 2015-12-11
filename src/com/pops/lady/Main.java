@@ -3,6 +3,8 @@ package com.pops.lady;
 import com.pops.lady.Hero.Hero;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Main {
 
@@ -17,8 +19,10 @@ public class Main {
                 System.out.println("Новая игра...");
                 System.out.println("Введите свое имя, сударь:");
                 String heroName = br.readLine();
+                if(heroName.isEmpty()) heroName = "Безымянный герой";
                 hero = new Hero(heroName);
                 game = new Game(hero);
+
                 System.out.println("Предстоит тебе, " + heroName + ", длинная и трудная путь-дорога в тридесятое царство " +
                         "\nдабы освобить от плена у Змея-Горыныча свою Василису Прекрасную");
                 game.play(1);
@@ -32,38 +36,44 @@ public class Main {
                         FileInputStream fis = new FileInputStream(file);
                         ObjectInputStream ios = new ObjectInputStream(fis);
                         game = (Game) ios.readObject();
+                        fis.close();
+                        ios.close();
+                        System.out.println(file.delete());
                         hero = game.getHero();
                         System.out.println(hero.getName() + " продолжает свою путь-дорогу...");
                         game.play(hero.getLevel());
                         break;
                     default:
+                        System.out.println(file.delete());
                         System.out.println("Новая игра...");
-                        file.delete();
                         System.out.println("Введите свое имя, сударь:");
                         String heroName = br.readLine();
                         hero = new Hero(heroName);
                         game = new Game(hero);
+                        game.getCurrentRoom().setEndBattle(true);
+                        game.setEndGame(false);
                         System.out.println("Предстоит тебе, " + heroName + ", длинная и трудная путь-дорога в тридесятое царство " +
                                 "\nдабы освобить от плена у Змея-Горыныча свою Василису Прекрасную");
                         game.play(1);
                         break;
                 }
+
             }
-            if(!game.isEndGame()){
+            if(!game.getCurrentRoom().isEndBattle()){
                 System.out.println("Желаете сохранить игру?(да\\нет)");
                 if(br.readLine().equals("да")){
-                    FileOutputStream fos = new FileOutputStream("LastGame.out");
+                    FileOutputStream fos = new FileOutputStream(file);
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
                     oos.writeObject(game);
                     System.out.println("Сохранение усешно. Восстанавливай силушку богатырскую и возвращайся =)");
+                    fos.close();
+                    oos.close();
                 }
                 else{
                     System.out.println("Потеряла твоя Василиса Прекрасная всю надежду на освобождение..." +
                             "Возвращайся и попробуй все заново =)");
-                    file.delete();
                 }
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -31,10 +31,10 @@ public class Room implements Serializable{
 
         switch ((new Random()).nextInt(9) % 3) {
             case 0:
-                this.artefact = new Fireball(level * 3);
+                this.artefact = new Fireball(level * 7);
                 break;
             case 1:
-                this.artefact = new Medicine( 30 + level * 10, level * 3);
+                this.artefact = new Medicine( 10 + level * 10, level * 3);
                 break;
             case 2:
                 this.artefact = new InvisibleHat();
@@ -91,11 +91,12 @@ public class Room implements Serializable{
     }
 
     public boolean battle(){
-        //System.out.println(hero.toString());
+        //
         System.out.println("================================================================\n");
         System.out.println("Ты попал в царство №" + level +
                 ".\n Здесь правит " + bigBoss.toString() +
                 "\nВ БОЙ! Да прибудет с тобой сила!)\n");
+        System.out.println(hero.toString());
         System.out.println("Сударь, ваши возможные действия:\n" +
                 "а - Удар мечом по злыденю\n" +
                 "б - Удар мечом с Артефактом-помощником\n" +
@@ -113,7 +114,7 @@ public class Room implements Serializable{
             try {
                 if (!choose()) {
                     endBattle = false;
-                    return true;
+                    return false;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -174,6 +175,10 @@ public class Room implements Serializable{
     public Artefact getArtefact()
     {
         return artefact;
+    }
+
+    public void setEndBattle(boolean endBattle) {
+        this.endBattle = endBattle;
     }
 
     public boolean isEndBattle() {
