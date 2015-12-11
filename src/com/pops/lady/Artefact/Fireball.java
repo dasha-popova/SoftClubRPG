@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class Fireball implements Artefact, Serializable{
     private Integer damage;
-    private final Integer needMana = 15;
+    private final Integer needMana = 25;
 
     public Fireball(Integer damage) {
         this.damage = damage;

@@ -3,8 +3,6 @@ package com.pops.lady;
 import com.pops.lady.Hero.Hero;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class Main {
 
@@ -28,8 +26,8 @@ public class Main {
                 game.play(1);
             }
             else {
-                System.out.println("а - Продолжить игру\n" +
-                        "б - Новая игра");
+                System.out.println( "а - Продолжить игру\n" +
+                                    "б - Новая игра");
                 String abc = br.readLine();
                 switch (abc){
                     case "а":
@@ -74,12 +72,12 @@ public class Main {
                             "Возвращайся и попробуй все заново =)");
                 }
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+         catch (IOException e) {
+             e.printStackTrace();
+         }
 
     }
 }
