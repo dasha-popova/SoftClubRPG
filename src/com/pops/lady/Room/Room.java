@@ -14,11 +14,12 @@ import java.util.Set;
 /**
  * Created by lady.pops on 10.12.2015.
  */
-public class Room {
+public class Room implements Serializable{
     private Integer level;
     private BigBoss bigBoss;
     private Artefact artefact;
     private Hero hero;
+    private boolean endBattle = true;
 
     public Room(Hero hero) {
         this.hero = hero;
@@ -30,10 +31,10 @@ public class Room {
 
         switch ((new Random()).nextInt(9) % 3) {
             case 0:
-                this.artefact = new Fireball(level * 5);
+                this.artefact = new Fireball(level * 3);
                 break;
             case 1:
-                this.artefact = new Medicine( 50 + level * 10, level * 3);
+                this.artefact = new Medicine( 30 + level * 10, level * 3);
                 break;
             case 2:
                 this.artefact = new InvisibleHat();
@@ -43,6 +44,7 @@ public class Room {
 
     private void fight(){
         System.out.println("\tУдар мечом со всею силушкой богатырскою.");
+        System.out.println("________________________________________________________________");
         Integer bossHit = bigBoss.getDamage();
         Integer heroHit = hero.getDamage();
         bigBoss.setHp(bigBoss.getHp() - heroHit);
@@ -68,6 +70,7 @@ public class Room {
         else{
             System.out.println("\tУдар мечом со всею силушкой богатырскою и использование\n" + artefact.toString());
             hero.useArtefact(artefact);
+            System.out.println("________________________________________________________________");
             Integer bossHit = bigBoss.getDamage();
             Integer heroHit = hero.getDamage() + artefact.getDamage();
             bigBoss.setHp(bigBoss.getHp() - heroHit);
@@ -89,62 +92,28 @@ public class Room {
 
     public boolean battle(){
         //System.out.println(hero.toString());
-        System.out.println("================================================================");
+        System.out.println("================================================================\n");
         System.out.println("Ты попал в царство №" + level +
                 ".\n Здесь правит " + bigBoss.toString() +
                 "\nВ БОЙ! Да прибудет с тобой сила!)\n");
+        System.out.println("Сударь, ваши возможные действия:\n" +
+                "а - Удар мечом по злыденю\n" +
+                "б - Удар мечом с Артефактом-помощником\n" +
+                "в - Позорное бегство с поле боя и возможное сохранение игры" );
 
         while(hero.isAlive() && bigBoss.isAlive()){
             if(hero.getMagicBag().isEmpty()){
-                System.out.println("\n\t\tИдет битва на мечах...");
+                System.out.println("\n\t\tИдет битва на мечах...\n");
                 while(hero.isAlive() && bigBoss.isAlive()) {
                     fight();
                 }
                 break;
             }
-            System.out.println("Какие действия предпримете, Сударь:\n" +
-                    "а - Удар мечом по злыденю\n" +
-                    "б - Удар мечом с Артефактом-помощником\n" +
-                    "в - Позорное бегство с поле боя" );
-            BufferedReader br = new BufferedReader(new InputStreamReader((System.in)));
+            System.out.println("Какие действия предпримете, Сударь: ");
             try {
-                String abc = br.readLine();
-                switch(abc){
-                    case "а":
-                        fight();
-                        break;
-                    case "б":
-                        System.out.println("Какой Артефакт применить желаете: ");
-                        Artefact[] keys = hero.getMagicBag().keySet().toArray(new Artefact[0]); // CHECK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-                        for(int i = 0; i < keys.length; ++i){
-                            System.out.println(i + " - " + keys[i].getName());
-                        }
-                        try {
-                            Integer index = Integer.parseInt(br.readLine());
-                            if(index < keys.length)
-                                fightWithArtefact(keys[index]);
-                            else{
-                                System.out.println("Ай-ай-ай, шкодник.\n " +
-                                        "А вот тебе на, нет у тебя такого Артефакта, бьешься ты лишь с божьей помощью.\n");
-                                fight();
-                            }
-                            break;
-                        } catch (NumberFormatException e){
-                            System.out.println("Ай-ай-ай, шкодник.\n " +
-                                    "А вот тебе на, нет у тебя такого Артефакта, бьешься ты лишь с божьей помощью.\n");
-                            fight();
-                            break;
-                        }
-                    case "в":
-                        System.out.println("Позорное бегство с поле боя\n" +
-                                "Ну и какой с тебя богатырь?\n");
-                        return false;
-                    default:
-                        System.out.println("Ай-ай-ай, шкодник.\n " +
-                                "Сударь, тебя русской грамоте обучали вообще? Стыдно!\n" +
-                                "Попробуй снова. Но на этот раз не подведи!\n");
-                        battle();
-                        break;
+                if (!choose()) {
+                    endBattle = false;
+                    return true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -155,11 +124,59 @@ public class Room {
         return true;
     }
 
+    private boolean choose() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader((System.in)));
+        String abc = br.readLine();
+        switch(abc){
+            case "а":
+                fight();
+                break;
+            case "б":
+                System.out.println("Какой Артефакт применить желаете: ");
+                Artefact[] keys = hero.getMagicBag().keySet().toArray(new Artefact[0]);
+                for(int i = 0; i < keys.length; ++i){
+                    System.out.println(i + " - " + keys[i].getName());
+                }
+                try {
+                    Integer index = Integer.parseInt(br.readLine());
+                    if(index < keys.length)
+                        fightWithArtefact(keys[index]);
+                    else{
+                        System.out.println("Ай-ай-ай, шкодник.\n " +
+                                "А вот тебе на, нет у тебя такого Артефакта, бьешься ты лишь с божьей помощью.\n");
+                        fight();
+                    }
+                    break;
+                } catch (NumberFormatException e){
+                    System.out.println("Ай-ай-ай, шкодник.\n " +
+                            "А вот тебе на, нет у тебя такого Артефакта, бьешься ты лишь с божьей помощью.\n");
+                    fight();
+                    break;
+                }
+            case "в":
+                System.out.println("Позорное бегство с поле боя\n" +
+                        "Ну и какой с тебя богатырь?\n");
+                return false;
+            default:
+                System.out.println("Ай-ай-ай, шкодник.\n " +
+                        "Сударь, тебя русской грамоте обучали вообще? Стыдно!\n" +
+                        "Попробуй снова. Но на этот раз не подведи!\n");
+                choose();
+                break;
+        }
+
+        return true;
+    }
     public BigBoss getBigBoss() {
         return bigBoss;
     }
 
-    public Artefact getArtefact() {
+    public Artefact getArtefact()
+    {
         return artefact;
+    }
+
+    public boolean isEndBattle() {
+        return endBattle;
     }
 }

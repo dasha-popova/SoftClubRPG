@@ -2,11 +2,13 @@ package com.pops.lady.Artefact;
 
 import com.pops.lady.Hero.Hero;
 
+import java.io.Serializable;
+
 /**
  * Created by lady.pops on 08.12.2015.
  */
 
-public class Fireball implements Artefact {
+public class Fireball implements Artefact, Serializable{
     private Integer damage;
     private final Integer needMana = 15;
 

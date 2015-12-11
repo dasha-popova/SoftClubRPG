@@ -2,12 +2,13 @@ package com.pops.lady.Hero;
 
 import com.pops.lady.Artefact.Artefact;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by lady.pops on 08.12.2015.
  */
-public class Hero {
+public class Hero implements Serializable{
     String name;
     Integer level;
     Integer hp;

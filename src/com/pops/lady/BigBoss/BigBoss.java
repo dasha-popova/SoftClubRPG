@@ -1,11 +1,12 @@
 package com.pops.lady.BigBoss;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by lady.pops on 10.12.2015.
  */
-public class BigBoss {
+public class BigBoss implements Serializable{
     private String name;
     private Integer damage;
     private Integer hp;

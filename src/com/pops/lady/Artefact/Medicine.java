@@ -2,10 +2,12 @@ package com.pops.lady.Artefact;
 
 import com.pops.lady.Hero.Hero;
 
+import java.io.Serializable;
+
 /**
  * Created by lady.pops on 08.12.2015.
  */
-public class Medicine implements Artefact{
+public class Medicine implements Artefact, Serializable{
     private Integer addHP;
     private Integer addMagic;
 
