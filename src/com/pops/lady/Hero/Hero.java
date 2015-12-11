@@ -26,9 +26,9 @@ public class Hero {
 
     public void upLevel(){
         this.level += 1;
-        this.hp = this.level * 100 + 50;
+        this.hp = this.level * 100 + 30;
         this.magic += 10;
-        this.damage += 20;
+        this.damage += 15;
     }
     public String getName() {
         return name;

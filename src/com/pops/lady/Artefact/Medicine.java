@@ -22,7 +22,7 @@ public class Medicine implements Artefact{
     @Override
     public boolean work(Hero person) {
         int hp = person.getHp();
-        int maxhp = person.getLevel() * 100;
+        int maxhp = person.getLevel() * 100 + 30;
         if(maxhp - addHP > hp){
             person.setHp(hp+addHP);
         }

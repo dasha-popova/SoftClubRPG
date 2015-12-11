@@ -25,7 +25,7 @@ public class Game {
             if(!currentRoom.battle()){
                 endGame = true;
                 System.out.println("Так и останется чахнуть твоя Василиса у Змея-то-Горыныча..." +
-                        "Подвел ты деву свою, богатырь. Победил тебя " + currentRoom.getBigBoss().getName() +
+                        "Подвел ты деву свою, богатырь. \nПобедил тебя " + currentRoom.getBigBoss().getName() +
                         "\n\nИгра окончена. Вы проиграли.");
                 break;
             }
