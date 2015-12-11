@@ -18,11 +18,11 @@ public class BigBoss {
 
     public BigBoss(Integer level) {
         this.level = level;
-        Integer rndName = (new Random()).nextInt() % allNames.length;
-        Integer rndObject = (new Random()).nextInt() % objects.length;
+        Integer rndName = (new Random()).nextInt(allNames.length);
+        Integer rndObject = (new Random()).nextInt(objects.length);
         this.name = allNames[rndName] + objects[rndObject];
-        this.hp = (level - 1) * 100 + 10 * rndName + rndObject;
-        this.damage = (level - 1) * 30 + 5 * rndName + rndObject;
+        this.hp = level * 100 + 10 * (rndName + 1) + rndObject;
+        this.damage = level * 17 + (rndName + 1) + rndObject;
     }
 
     public BigBoss(String name) {
@@ -38,10 +38,6 @@ public class BigBoss {
 
     public Integer getDamage() {
         return damage;
-    }
-
-    public Integer getLevel() {
-        return level;
     }
 
     public Integer getHp() {

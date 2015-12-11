@@ -45,7 +45,17 @@ public class Room {
         Integer bossHit = bigBoss.getDamage();
         Integer heroHit = hero.getDamage();
         bigBoss.setHp(bigBoss.getHp() - heroHit);
+        if(!bigBoss.isAlive()){
+            System.out.println("Да победил ты злыдня здешнего, и ждет тебя следующее царство...");
+            System.out.println("================================================================");
+            return;
+        }
         hero.setHp(hero.getHp() - bossHit);
+        System.out.println(bigBoss);
+        System.out.println("Hero: " + hero.getName() +
+                ",\n\t Здоровье = " + hero.getHp() +
+                ",\n\t Магия = " + hero.getMagic() +
+                ",\n\t Волшебный мешок = " + hero.getMagicBag() + '.');
     }
 
     private void fightWithArtefact(Artefact artefact){
@@ -59,24 +69,38 @@ public class Room {
             Integer bossHit = bigBoss.getDamage();
             Integer heroHit = hero.getDamage() + artefact.getDamage();
             bigBoss.setHp(bigBoss.getHp() - heroHit);
+            if(!bigBoss.isAlive()){
+                System.out.println("Да победил ты злыдня здешнего, и ждет тебя следующее царство...");
+                System.out.println("================================================================");
+                return;
+            }
             hero.setHp(hero.getHp() - bossHit);
+            System.out.println(bigBoss);
+            System.out.println("Hero: " + hero.getName() +
+                    ",\n\t Здоровье = " + hero.getHp() +
+                    ",\n\t Магия = " + hero.getMagic() +
+                    ",\n\t Волшебный мешок = " + hero.getMagicBag() + '.');
         }
+
     }
 
     public boolean battle(){
+        System.out.println(hero.toString());
+        System.out.println("================================================================");
         System.out.println("Ты попал в царство №" + level +
-                ". Здесь правит " + bigBoss.toString() +
+                ".\n Здесь правит " + bigBoss.toString() +
                 "\nВ БОЙ! Да прибудет с тобой сила!)");
-        while(hero.isAlive() || bigBoss.isAlive()){
+
+        while(hero.isAlive() && bigBoss.isAlive()){
             System.out.println("Какие действия предпримете, Сударь:\n" +
                     "а - Удар мечом по злыденю\n" +
                     "б - Удар мечом с Артефактом-помощником\n" +
-                    "с - Позорное бегство с поле боя\n" );
+                    "с - Позорное бегство с поле боя" );
             BufferedReader br = new BufferedReader(new InputStreamReader((System.in)));
             try {
                 String abc = br.readLine();
                 switch(abc){
-                    case "a":
+                    case "а":
                         fight();
                         break;
                     case "б":

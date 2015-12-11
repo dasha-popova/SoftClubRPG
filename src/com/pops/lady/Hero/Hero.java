@@ -18,22 +18,20 @@ public class Hero {
     public Hero(String name) {
         this.name = name;
         this.level = 1;
-        this.hp = 100 * this.level;
+        this.hp = 150 * this.level;
         this.magic = 10 * this.level;
-        this.damage = 13 * this.level;
+        this.damage = 30 * this.level;
         this.magicBag = new HashMap<Artefact,Integer>();
     }
 
     public void upLevel(){
         this.level += 1;
-        this.hp += 100;
+        this.hp = this.level * 100 + 50;
         this.magic += 10;
+        this.damage += 20;
     }
     public String getName() {
         return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public Integer getLevel() {
         return level;
@@ -91,7 +89,7 @@ public class Hero {
                 ",\n\t Уровень = " + level +
                 ",\n\t Здоровье = " + hp +
                 ",\n\t Магия = " + magic +
-                ",\n\t Силушка богатырская =" + damage +
-                ",\n\t Волшебный мешок =" + magicBag + '.';
+                ",\n\t Силушка богатырская = " + damage +
+                ",\n\t Волшебный мешок = " + magicBag + '.';
     }
 }
