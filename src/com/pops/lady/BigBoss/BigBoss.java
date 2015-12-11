@@ -12,7 +12,7 @@ public class BigBoss {
     private Integer level;
 
     private static String[] allNames =
-            {"Водяной", "Леший", "Баба Яга", "Кощей Бессмертный", "Змей-Горыныч", "Бука-Злюка"};
+            {"Водяной", "Леший", "Лихо одноглазое", "Баба Яга", "Кощей Бессмертный", "Бука-Злюка"};
     private static String[] objects =
             {" с медным костылем", " и посох подчинения", " на крыльях ночи", " и 40 кошек", " с мечом ярости", " и бешенный пес"};
 
@@ -23,6 +23,13 @@ public class BigBoss {
         this.name = allNames[rndName] + objects[rndObject];
         this.hp = (level - 1) * 100 + 10 * rndName + rndObject;
         this.damage = (level - 1) * 30 + 5 * rndName + rndObject;
+    }
+
+    public BigBoss(String name) {
+        this.name = name;
+        this.level = 11;
+        this.hp = this.level * 110;
+        this.damage = this.level * 20;
     }
 
     public String getName() {

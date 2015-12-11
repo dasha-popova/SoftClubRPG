@@ -53,7 +53,7 @@ public class Hero {
         this.magic = magic;
     }
     public void addArtefact(Artefact artefact){
-
+        System.out.println("Да подобрал ты Артефакт чудный\n" + artefact.toString());
         if(!magicBag.containsKey(artefact))
             magicBag.put(artefact,1);
         else{

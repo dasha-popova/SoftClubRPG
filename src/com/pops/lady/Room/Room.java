@@ -22,7 +22,11 @@ public class Room {
     public Room(Hero hero) {
         this.hero = hero;
         this.level = hero.getLevel();
-        this.bigBoss = new BigBoss(level);
+        if(this.level == 11)
+            this.bigBoss = new BigBoss("Змей-Горыныч");
+        else
+            this.bigBoss = new BigBoss(level);
+
         switch (level % 3) {
             case 0:
                 this.artefact = new Fireball(level * 5);
@@ -36,7 +40,7 @@ public class Room {
         }
     }
 
-    public void fight(){
+    private void fight(){
         System.out.println("Удар мечом со всею силушкой богатырскою.");
         Integer bossHit = bigBoss.getDamage();
         Integer heroHit = hero.getDamage();
@@ -44,7 +48,7 @@ public class Room {
         hero.setHp(hero.getHp() - bossHit);
     }
 
-    public void fightWithArtefact(Artefact artefact){
+    private void fightWithArtefact(Artefact artefact){
         if(!artefact.work(hero)){
             System.out.println("Сударь пока не может использовать сей Артефакт!\n");
             fight();
@@ -118,4 +122,11 @@ public class Room {
         return true;
     }
 
+    public BigBoss getBigBoss() {
+        return bigBoss;
+    }
+
+    public Artefact getArtefact() {
+        return artefact;
+    }
 }
